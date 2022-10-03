@@ -1,0 +1,52 @@
+:root {
+  --container-width-lg: 76%;
+  --container-width-md: 90%;
+  --container-width-sm: 94%;
+}
+
+li {
+  list-style: none;
+}
+
+.container {
+  width: var(--container-width-lg);
+  margin: 0 auto;
+}
+
+nav {
+  background: transparent;
+  top: 0;
+  width: 100vw;
+  position: fixed;
+  z-index: 11;
+}
+
+.nav-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  height: 50px;
+}
+.nav-logo{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.nav-menu {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.list-menu {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.input-all {
+  width: 250px;
+  height: 1.5rem;
+  border-radius: 20px 8px 20px 8px;
+  margin-left: 20px;
+  padding:5px 8px 5px 15px ;
+  border: 1px solid #d3d3d3;
+}

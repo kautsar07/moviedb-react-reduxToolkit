@@ -1,0 +1,50 @@
+:root {
+  --container-width-lg: 76%;
+  --container-width-md: 90%;
+  --container-width-sm: 94%;
+}
+
+.container {
+  width: var(--container-width-lg);
+  margin: 0 auto;
+}
+header {
+  /* background-image: url("./header1.jpg"); */
+  background-size: cover;
+  /* height: 100vh; */
+  overflow: hidden;
+}
+
+.movie-popular {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.card img {
+  width: 100%;
+  border-radius: 60px 15px 60px 15px;
+  border: none;
+}
+
+.caption {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  position: absolute;
+  top: 40%;
+  right: 0;
+  width: 500px;
+  height: 100px;
+  text-align: left;
+  color: #d3d3d3;
+}
+
+.trailer{
+    background: red;
+    border: none;
+    width: 30%;
+    border-radius: 30px;
+}
+.trailer:hover{
+    background: red;
+}

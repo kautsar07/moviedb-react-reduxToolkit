@@ -1,0 +1,21 @@
+:root {
+    --container-width-lg: 76%;
+    --container-width-md: 90%;
+    --container-width-sm: 94%;
+  }
+.container {
+    width: var(--container-width-lg);
+    margin: 0 auto;
+  }
+.detail{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 100px;
+    gap: 10px;
+}
+.poster{
+    width: fit-content;
+}
+.poster-detail{
+    width: 500px;
+}
