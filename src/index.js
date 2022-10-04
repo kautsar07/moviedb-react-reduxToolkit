@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Details from './component/Details/Details';
+import Coba from './Coba'
+import Navbar from './component/Navbar/Navbar';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,6 +15,8 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/Details/:id" element={<Details />} />
+        <Route path='/coba' element={<Coba/>}/>
+        <Route path='/Navbar' element={<Navbar/>}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

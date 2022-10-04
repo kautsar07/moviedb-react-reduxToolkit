@@ -6,6 +6,7 @@ const { Meta } = Card;
 
 
 export default function Main() {
+
     const [popular, setpopular] = useState([]);
   const loadPopular = async () => {
     try {

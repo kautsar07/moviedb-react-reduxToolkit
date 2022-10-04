@@ -33,6 +33,7 @@ export default function Header(props) {
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
   };
+  console.log(typeof trending.filter((item)=> item.name===item[0]));
   return (
     <div>
       {/* ================= Navbar ============== */}
@@ -48,7 +49,6 @@ export default function Header(props) {
                 <img
                   className="d-block w-100"
                   src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
-                  alt="Second slide"
                 />
                 <div className="container">
                   <Carousel.Caption className="caption">
@@ -60,7 +60,7 @@ export default function Header(props) {
                       laudantium tenetur obcaecati quas, rerum aliquam sunt.
                     </p>
 
-                    <Button href={`https://www.youtube.com/results?search_query=${item.name}`} className="trailer">Watch Trailer</Button>
+                    <Button href={`https://www.youtube.com/results?search_query=`} className="trailer">Watch Trailer</Button>
 
                   </Carousel.Caption>
                 </div>
