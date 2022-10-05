@@ -17,7 +17,7 @@ nav {
   background: transparent;
   top: 0;
   width: 100vw;
-  position: fixed;
+  position: absolute;
   z-index: 11;
 }
 
@@ -27,7 +27,7 @@ nav {
   gap: 0;
   height: 50px;
 }
-.nav-logo{
+.nav-logo {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -39,29 +39,32 @@ nav {
 }
 .input-all {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   width: 380px;
   border-radius: 30px;
   height: 2rem;
   font-size: small;
   background: transparent;
-  border:1px solid #e4d9d9;
-  color:white;
-  padding:5px 15px 5px 15px ;
+  border: 1px solid #ffffff;
+  color: white;
+  padding: 5px 15px 5px 15px;
 }
 
-.input-all:hover{
-  border:1px solid red;
+.input-all:hover {
+  border: 1px solid red;
 }
-.login-regis{
+.srch{
+  position: absolute;
+  right: 41%;
+  top: 18px;
+}
+.login-regis {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 10px;
 }
-.btn-log{
+.btn-log {
   width: 90px;
   background: transparent;
   color: red;
@@ -71,12 +74,12 @@ nav {
   cursor: pointer;
 }
 
-.btn-log:hover{
+.btn-log:hover {
   background: transparent;
   color: rgb(255, 129, 129);
   border: 1px solid rgb(255, 129, 129);
 }
-.btn-reg{
+.btn-reg {
   width: 90px;
   background: red;
   font-size: small;
@@ -85,11 +88,11 @@ nav {
   border-radius: 30px;
   cursor: pointer;
 }
-.btn-reg:hover{
+.btn-reg:hover {
   background: rgb(255, 129, 129);
   border: 1px solid rgb(255, 129, 129);
 }
-.search{
+.search {
   background: transparent;
   border-style: none;
   border: none;

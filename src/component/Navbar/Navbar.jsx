@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BsSearch } from "react-icons/bs";
 import "./Navbar.css";
@@ -27,7 +27,7 @@ export default function Navbar() {
         `https://api.themoviedb.org/3/search/movie?api_key=6b4cec3e77943cdafbcaaaead5f55c14&query=${e.target.value}`
         // "https://api.themoviedb.org/3/movie/popular?api_key=6b4cec3e77943cdafbcaaaead5f55c14"
       );
-      console.log(res.data.results);
+      console.log(res.data);
       setSearch(res.data.results);
     } catch (error) {
       console.error(error);
@@ -36,37 +36,39 @@ export default function Navbar() {
 
   useEffect(() => {
     // loadPopular()
-    handleChange()
+    handleChange();
   }, []);
 
-  const submit = (e)=>{
-    navigate(`/Coba/${e.target.value}`)
-  }
- 
+  const submit = (e) => {
+    navigate(`/Coba/${e.target.value}`);
+  };
+
   return (
     <nav>
       <div className="container">
         <div className="nav-main">
           <div className="nav-logo">
-            <img
-              src={
-                "https://movielist-react-app.netlify.app/static/media/Logo.eeba5c17ddf85f2145e83dd963662921.svg"
-              }
-            ></img>
+            <Link to="/">
+              <img
+                src={
+                  "https://movielist-react-app.netlify.app/static/media/Logo.eeba5c17ddf85f2145e83dd963662921.svg"
+                }
+              ></img>
+            </Link>
           </div>
           <div className="nav-menu">
-            <form onSubmit={(e)=>submit(e)}>
-              <span className="input-all">
+            <div>
+              <form >
                 <input
                   type="text"
-                  className="search"
+                  className="input-all"
                   value={search.original_name || search.original_title}
                   placeholder="What do you want to watch"
                   onChange={(e) => handleChange(e)}
                 ></input>
                 <BsSearch className="srch" />
-              </span>
-            </form>
+              </form>
+            </div>
           </div>
           <div className="login-regis">
             <Button className="btn-log">Login</Button>
@@ -74,12 +76,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-      {search && search.map((item)=>(
-        <h1>
-          {item.title}
-        </h1>
-      ))}
-      
+      {search && search.map((item) => <h1 style={{color:"white"}}>{item.title}</h1>)}
     </nav>
   );
 }

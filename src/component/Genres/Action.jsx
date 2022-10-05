@@ -5,11 +5,13 @@ import axios from "axios";
 import { BsFillStarFill } from "react-icons/bs";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "react-bootstrap";
+import Buton from "./Button";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Card } from "antd";
 import { Autoplay, Pagination, Navigation } from "swiper";
+import Genres from "./Genres";
 import "./Genres.css";
 import "../Main/Main.css";
 
@@ -50,7 +52,9 @@ export default function Horor() {
       <header className="header"></header>
       <div className="container">
         <div className="kategori">
+        <div style={{ marginBottom: "50px" }}>
           <h1>Browse by Category</h1>
+        </div>
           <Swiper
           spaceBetween={10}
           slidesPerView={8}
@@ -65,7 +69,7 @@ export default function Horor() {
             {genres &&
               genres.map((item) => (
                 <SwiperSlide>
-                 <Link to={`/${item.name}`}>
+                  <Link to={`/${item.name}`}>
                     <Button className="btn-genre">{item.name}</Button>
                   </Link>
                 </SwiperSlide>
@@ -99,5 +103,46 @@ export default function Horor() {
         </div>
       </div>
     </div>
-  );
+  )
 }
+
+// <div>
+// //     <Navbar />
+
+// //     <header className="header"></header>
+// //     <div className="container">
+// //       <div className="kategori">
+// //         <h1>Browse by Category</h1>
+
+// //         <Swiper
+// //           spaceBetween={10}
+// //           slidesPerView={8}
+// //           autoplay={{
+// //             delay: 2500,
+// //             disableOnInteraction: false,
+// //           }}
+// //           modules={[Autoplay, Pagination, Navigation]}
+// //           className="mySwiper"
+// //         >
+// //           <SwiperSlide>
+// //             <div className="movie-popular">
+// //               {genres && genres.map((item) => <Buton button={item.name} />)}
+// //             </div>
+// //           </SwiperSlide>
+// //         </Swiper>
+// //         <div className="movie-popular">
+// //           {category &&
+// //             category.map((item) => (
+// //               <div>
+// //                 <Genres
+// //                   poster={item.poster_path}
+// //                   vote={item.vote_average}
+// //                   title={item.original_title}
+// //                 ></Genres>
+// //               </div>
+// //             ))}
+// //         </div>
+// //       </div>
+// //     </div>
+// //   </div>
+// // );

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Card } from "antd";
 import { BsFillStarFill } from "react-icons/bs";
+import { Button } from "react-bootstrap";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import "./Details.css";
+import "../Main/Main.css"
 
 export default function Details() {
   const { id } = useParams();
@@ -32,7 +34,7 @@ export default function Details() {
       <div className="deta">
         <img
           className="poster-detail"
-          src={`https://image.tmdb.org/t/p/original/${detail.backdrop_path}`}
+          src={`https://image.tmdb.org/t/p/original/${detail.backdrop_path || detail.poster_path}`}
         ></img>
       </div>
       <div className="container">
@@ -44,10 +46,19 @@ export default function Details() {
             ))}
           </div>
           <p>{detail.overview}</p>
-          <div className="rating">
-            <p>
-              <BsFillStarFill style={{color:"yellow"}} /> {detail.vote_average} / 10
+          <div >
+            <p className="rating">
+              <BsFillStarFill style={{ color: "yellow" }} />{" "}
+              {detail.vote_average} / 10
             </p>
+            <Button
+              href={`https://www.youtube.com/results?search_query=${
+                detail.original_name || detail.original_title
+              }`}
+              className="trailer"
+            >
+              Watch Trailer
+            </Button>
           </div>
         </div>
       </div>

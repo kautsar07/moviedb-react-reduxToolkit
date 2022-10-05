@@ -22,7 +22,7 @@ export default function Horor() {
       const res = await axios.get(
         "https://api.themoviedb.org/3/search/movie?api_key=6b4cec3e77943cdafbcaaaead5f55c14&query=documentary"
       );
-      console.log(res.data);
+      console.log(res.data.results);
       setCategory(res.data.results);
     } catch (error) {
       console.error(error);
@@ -33,7 +33,7 @@ export default function Horor() {
       const res = await axios.get(
         "https://api.themoviedb.org/3/genre/movie/list?api_key=6b4cec3e77943cdafbcaaaead5f55c14"
       );
-      console.log(res.data);
+      console.log(res.data.genres);
       setGenres(res.data.genres);
     } catch (error) {
       console.error(error);
@@ -74,7 +74,8 @@ export default function Horor() {
         </Swiper>
           <div className="movie-popular">
             {category &&
-              category.map((item) => (
+              category.map((item)=>(
+              
                 <Link to={`/Details/${item.id}`}>
                   <Card
                     className="card"

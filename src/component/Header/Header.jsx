@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-
 import { Carousel, Button } from "react-bootstrap";
 import axios from "axios";
-import logo from "./header1.jpg";
 import "./Header.css";
 import Navbar from "../Navbar/Navbar";
 import Main from "../Main/Main";
+import PropagateLoader from "react-spinners/PropagateLoader";
 import { Card } from "antd";
+
 const { Meta } = Card;
 
 export default function Header(props) {
   const [trending, setTrending] = useState([]);
+  const [loading, setLoading] = useState(false);
   const loadTrending = async () => {
     try {
       const res = await axios.get(
@@ -25,6 +26,10 @@ export default function Header(props) {
 
   useEffect(() => {
     loadTrending();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
   }, []);
   const [index, setIndex] = useState(0);
 
@@ -36,9 +41,16 @@ export default function Header(props) {
     <div>
       {/* ================= Navbar ============== */}
       <Navbar />
-
-      <header>
-        {/* <div className="head"></div> */}
+      {loading ? (
+        <PropagateLoader
+          className="load"
+          size={30}
+          color={"#F37A24"}
+          loading={loading}
+        />
+      ) : (
+        <header>
+          {/* <div className="head"></div> */}
           <Carousel activeIndex={index} onSelect={handleSelect}>
             {trending &&
               trending.map((item) => (
@@ -47,7 +59,7 @@ export default function Header(props) {
                     className="d-block w-100"
                     src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
                   />
-                  <div className="container">
+                  <div className="contai">
                     <Carousel.Caption className="caption">
                       <h1>{item.original_title || item.original_name}</h1>
                       <p>
@@ -70,7 +82,8 @@ export default function Header(props) {
                 </Carousel.Item>
               ))}
           </Carousel>
-      </header>
+        </header>
+      )}
       <Main />
     </div>
   );
