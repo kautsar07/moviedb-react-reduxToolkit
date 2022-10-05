@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import axios from "axios";
 import { BsFillStarFill } from "react-icons/bs";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "react-bootstrap";
-import Buton from "./Button";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Card } from "antd";
 import { Autoplay, Pagination, Navigation } from "swiper";
-import Genres from "./Genres";
 import "./Genres.css";
 import "../Main/Main.css";
 
@@ -49,7 +47,9 @@ export default function Horor() {
   return (
     <div>
       <Navbar />
-      <header className="header"></header>
+      <header className="header">
+
+      </header>
       <div className="container">
         <div className="kategori">
         <div style={{ marginBottom: "50px" }}>

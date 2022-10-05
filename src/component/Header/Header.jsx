@@ -5,11 +5,11 @@ import "./Header.css";
 import Navbar from "../Navbar/Navbar";
 import Main from "../Main/Main";
 import PropagateLoader from "react-spinners/PropagateLoader";
-import { Card } from "antd";
 
-const { Meta } = Card;
 
-export default function Header(props) {
+
+
+export default function Header() {
   const [trending, setTrending] = useState([]);
   const [loading, setLoading] = useState(false);
   const loadTrending = async () => {
@@ -18,7 +18,7 @@ export default function Header(props) {
         "https://api.themoviedb.org/3/trending/all/day?api_key=6b4cec3e77943cdafbcaaaead5f55c14"
       );
       console.log(res.data.results);
-      setTrending(res.data.results);
+      setTrending(res.data.results.slice(0,3));
     } catch (error) {
       console.error(error);
     }

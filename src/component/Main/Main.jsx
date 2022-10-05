@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "react-bootstrap";
 import { BsFillStarFill } from "react-icons/bs";
 import axios from "axios";
 import PacmanLoader from "react-spinners/PacmanLoader";
-
-// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./Main.css";
 import { Card } from "antd";
 import { Autoplay, Pagination, Navigation } from "swiper";
-import { FallingLines } from "react-loader-spinner";
+
 const { Meta } = Card;
 
 export default function Main() {

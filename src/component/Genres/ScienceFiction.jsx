@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import axios from "axios";
 import { BsFillStarFill } from "react-icons/bs";
