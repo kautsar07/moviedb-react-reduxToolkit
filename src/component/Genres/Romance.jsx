@@ -1,27 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Navbar from "../Navbar/Navbar";
+import axios from "axios";
+import { BsFillStarFill } from "react-icons/bs";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "react-bootstrap";
-import { BsFillStarFill } from "react-icons/bs";
-import axios from "axios";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import "./Main.css";
 import { Card } from "antd";
 import { Autoplay, Pagination, Navigation } from "swiper";
-const { Meta } = Card;
+import "./Genres.css";
+import "../Main/Main.css";
 
-export default function Main() {
-  const [popular, setpopular] = useState([]);
+const { Meta } = Card;
+export default function Horor() {
+  const [category, setCategory] = useState([]);
   const [genres, setGenres] = useState([]);
-  const loadPopular = async () => {
+  const loadCategory = async () => {
     try {
       const res = await axios.get(
-        "https://api.themoviedb.org/3/movie/popular?api_key=6b4cec3e77943cdafbcaaaead5f55c14"
+        "https://api.themoviedb.org/3/search/movie?api_key=6b4cec3e77943cdafbcaaaead5f55c14&query=romance"
       );
-      console.log(res.data.results);
-      setpopular(res.data.results);
+      console.log(res.data);
+      setCategory(res.data.results);
     } catch (error) {
       console.error(error);
     }
@@ -37,59 +39,19 @@ export default function Main() {
       console.error(error);
     }
   };
+
   useEffect(() => {
+    loadCategory();
     loadGenres();
-    loadPopular();
   }, []);
   return (
-    <section>
+    <div>
+      <Navbar />
+      <header className="header"></header>
       <div className="container">
-        <div style={{ marginBottom: "50px" }}>
-          <h1>Populars</h1>
-        </div>
-
-        <Swiper
-          spaceBetween={30}
-          slidesPerView={4}
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false,
-          }}
-          modules={[Autoplay, Pagination, Navigation]}
-          className="mySwiper"
-        >
-          <div className="movie-popular">
-            {popular.map((item) => (
-              <SwiperSlide>
-                <Link to={`/Details/${item.id}`}>
-                  <Card
-                    className="card"
-                    hoverable
-                    cover={
-                      <img
-                        src={`https://image.tmdb.org/t/p/original/${item.poster_path}`}
-                      />
-                    }
-                  >
-                    <div className="title">
-                      <Meta title={item.original_title} />
-                      <p>
-                        <BsFillStarFill style={{ color: "yellow" }} />{" "}
-                        {item.vote_average} / 10
-                      </p>
-                    </div>
-                  </Card>
-                </Link>
-              </SwiperSlide>
-            ))}
-          </div>
-        </Swiper>
-
-        <div style={{ marginBottom: "50px" }}>
-          <h1>Browses by Category</h1>
-        </div>
-
-        <Swiper
+        <div className="kategori">
+          <h1>Browse by Category</h1>
+          <Swiper
           spaceBetween={10}
           slidesPerView={8}
           autoplay={{
@@ -110,20 +72,9 @@ export default function Main() {
               ))}
           </div>
         </Swiper>
-
-        <Swiper
-          spaceBetween={30}
-          slidesPerView={4}
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false,
-          }}
-          modules={[Autoplay, Pagination, Navigation]}
-          className="mySwiper"
-        >
           <div className="movie-popular">
-            {popular.map((item) => (
-              <SwiperSlide>
+            {category &&
+              category.map((item) => (
                 <Link to={`/Details/${item.id}`}>
                   <Card
                     className="card"
@@ -143,11 +94,10 @@ export default function Main() {
                     </div>
                   </Card>
                 </Link>
-              </SwiperSlide>
-            ))}
+              ))}
           </div>
-        </Swiper>
+        </div>
       </div>
-    </section>
+    </div>
   );
 }

@@ -13,18 +13,10 @@ header {
   background-size: cover;
   /* height: 100vh; */
   overflow: hidden;
+  margin-bottom: 50px;
 }
 
-.movie-popular {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
-.card img {
-  width: 100%;
-  border-radius: 60px 15px 60px 15px;
-  border: none;
-}
+
 
 .caption {
   display: flex;
@@ -47,4 +39,7 @@ header {
 }
 .trailer:hover{
     background: red;
+}
+.mm img{
+  height: 100vh;
 }

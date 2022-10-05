@@ -38,6 +38,10 @@ export default function Navbar() {
     // loadPopular()
     handleChange()
   }, []);
+
+  const submit = (e)=>{
+    navigate(`/Coba/${e.target.value}`)
+  }
  
   return (
     <nav>
@@ -51,11 +55,12 @@ export default function Navbar() {
             ></img>
           </div>
           <div className="nav-menu">
-            <form >
+            <form onSubmit={(e)=>submit(e)}>
               <span className="input-all">
                 <input
                   type="text"
                   className="search"
+                  value={search.original_name || search.original_title}
                   placeholder="What do you want to watch"
                   onChange={(e) => handleChange(e)}
                 ></input>

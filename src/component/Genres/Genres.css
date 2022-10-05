@@ -1,0 +1,15 @@
+:root {
+  --container-width-lg: 76%;
+  --container-width-md: 90%;
+  --container-width-sm: 94%;
+}
+
+.container {
+  width: var(--container-width-lg);
+  margin: 0 auto;
+}
+.header {
+  background-image: url("https://images.unsplash.com/photo-1574267432553-4b4628081c31?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1631&q=80");
+  width: 100vw;
+  height: 50vh;
+}
