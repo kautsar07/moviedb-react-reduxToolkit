@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link} from "react-router-dom";
+import { Link, useParams} from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import axios from "axios";
 import { BsFillStarFill } from "react-icons/bs";
@@ -17,10 +17,11 @@ const { Meta } = Card;
 export default function Horor() {
   const [category, setCategory] = useState([]);
   const [genres, setGenres] = useState([]);
+  const {genre} = useParams()
   const loadCategory = async () => {
     try {
       const res = await axios.get(
-        "https://api.themoviedb.org/3/search/movie?api_key=6b4cec3e77943cdafbcaaaead5f55c14&query=family"
+        `https://api.themoviedb.org/3/search/movie?api_key=6b4cec3e77943cdafbcaaaead5f55c14&query=${genre}`
       );
       console.log(res.data);
       setCategory(res.data.results);
@@ -50,28 +51,10 @@ export default function Horor() {
       <header className="header"></header>
       <div className="container">
         <div className="kategori">
-          <h1>Browse by Category</h1>
-          <Swiper
-          spaceBetween={10}
-          slidesPerView={8}
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false,
-          }}
-          modules={[Autoplay, Pagination, Navigation]}
-          className="mySwiper"
-        >
-          <div className="movie-popular">
-            {genres &&
-              genres.map((item) => (
-                <SwiperSlide>
-                  <Link to={`/${item.name}`}>
-                    <Button className="btn-genre">{item.name}</Button>
-                  </Link>
-                </SwiperSlide>
-              ))}
+        <div style={{ marginBottom: "50px" }}>
+            <h1>Results Movie Genre "{genre}"</h1>
           </div>
-        </Swiper>
+       
           <div className="movie-popular">
             {category &&
               category.map((item) => (

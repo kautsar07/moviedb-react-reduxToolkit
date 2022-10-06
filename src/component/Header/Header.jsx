@@ -5,6 +5,7 @@ import "./Header.css";
 import Navbar from "../Navbar/Navbar";
 import Main from "../Main/Main";
 import PropagateLoader from "react-spinners/PropagateLoader";
+import Footer from "../Footer/Footer";
 
 
 
@@ -59,7 +60,7 @@ export default function Header() {
                     className="d-block w-100"
                     src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
                   />
-                  <div className="contai">
+                  <div className="container">
                     <Carousel.Caption className="caption">
                       <h1>{item.original_title || item.original_name}</h1>
                       <p>
@@ -85,6 +86,7 @@ export default function Header() {
         </header>
       )}
       <Main />
+      <Footer/>
     </div>
   );
 }

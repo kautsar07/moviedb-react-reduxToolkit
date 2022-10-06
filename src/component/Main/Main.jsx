@@ -15,34 +15,31 @@ import { Autoplay, Pagination, Navigation } from "swiper";
 const { Meta } = Card;
 
 export default function Main() {
-  const [popular, setpopular] = useState([]);
+  const [popular, setPopular] = useState([]);
+  const [topRated, setTopRated] = useState([]);
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(false);
-  const loadPopular = async () => {
+  const loadMovie = async () => {
     try {
       const res = await axios.get(
         "https://api.themoviedb.org/3/movie/popular?api_key=6b4cec3e77943cdafbcaaaead5f55c14"
       );
-      console.log(res.data.results);
-      setpopular(res.data.results);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const loadGenres = async () => {
-    try {
-      const res = await axios.get(
+      const rated = await axios.get(
+        "https://api.themoviedb.org/3/movie/top_rated?api_key=6b4cec3e77943cdafbcaaaead5f55c14"
+      );
+      const gen = await axios.get(
         "https://api.themoviedb.org/3/genre/movie/list?api_key=6b4cec3e77943cdafbcaaaead5f55c14"
       );
-      console.log(res.data);
-      setGenres(res.data.genres);
+      console.log(res.data.results);
+      setGenres(gen.data.genres);
+      setPopular(res.data.results);
+      setTopRated(rated.data.results);
     } catch (error) {
       console.error(error);
     }
   };
   useEffect(() => {
-    loadGenres();
-    loadPopular();
+    loadMovie();
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -118,7 +115,7 @@ export default function Main() {
                   {genres &&
                     genres.map((item) => (
                       <SwiperSlide>
-                        <Link to={`/${item.name}`}>
+                        <Link to={`/genres/${item.name}`}>
                           <Button className="btn-genre">{item.name}</Button>
                         </Link>
                       </SwiperSlide>
@@ -137,7 +134,7 @@ export default function Main() {
                 className="mySwiper"
               >
                 <div className="movie-popular">
-                  {popular.map((item) => (
+                  {topRated.map((item) => (
                     <SwiperSlide>
                       <Link to={`/Details/${item.id}`}>
                         <Card

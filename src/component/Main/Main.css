@@ -1,6 +1,9 @@
 *{
   text-decoration: none;
 }
+section{
+  margin: 50px 0 50px 0;
+}
 .movie-popular {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
