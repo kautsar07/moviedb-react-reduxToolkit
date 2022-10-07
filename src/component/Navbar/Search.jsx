@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Card } from "antd";
 import { Autoplay, Pagination, Navigation } from "swiper";
+import Footer from "../Footer/Footer";
 import { BsFillStarFill } from "react-icons/bs";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -84,6 +85,7 @@ export default function Search() {
           </Swiper>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
