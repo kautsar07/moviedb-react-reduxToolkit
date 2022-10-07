@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import { Autoplay, Pagination, Navigation } from "swiper";
+import Footer from "../Footer/Footer";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -113,6 +114,7 @@ export default function Details() {
           </div>
         </Swiper>
       </div>
+      <Footer />
     </div>
   );
 }
