@@ -49,12 +49,14 @@ export default function Navbar() {
     console.log("Success: ", value);
     try {
       const res = await axios.post(
-        "http://notflixtv.herokuapp.com/api/v1/users/login",
+        "https://notflixtv.herokuapp.com/api/v1/users/login",
         value
       );
       localStorage.setItem("user", JSON.stringify(res.data.data));
       localStorage.setItem("token", JSON.stringify(res.data.data.token));
-    } catch (error) {}
+    } catch (error) {
+
+    }
     setTimeout(function () {
       window.location.reload(1);
     }, 1500);
@@ -80,7 +82,7 @@ export default function Navbar() {
     console.log("Success: ", value);
     try {
       const res = await axios.post(
-        "http://notflixtv.herokuapp.com/api/v1/users",
+        "https://notflixtv.herokuapp.com/api/v1/users",
         value
       );
       localStorage.setItem("user", JSON.stringify(res.data.data));
