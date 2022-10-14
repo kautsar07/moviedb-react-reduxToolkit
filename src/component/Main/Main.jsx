@@ -30,7 +30,6 @@ export default function Main() {
       const gen = await axios.get(
         "https://api.themoviedb.org/3/genre/movie/list?api_key=6b4cec3e77943cdafbcaaaead5f55c14"
       );
-      console.log(res.data.results);
       setGenres(gen.data.genres);
       setPopular(res.data.results);
       setTopRated(rated.data.results);
@@ -71,6 +70,7 @@ export default function Main() {
                     <SwiperSlide>
                       <Link to={`/Details/${item.id}`}>
                         <Card
+                        style={{color:"white"}}
                           className="card"
                           hoverable
                           cover={
@@ -79,8 +79,8 @@ export default function Main() {
                             />
                           }
                         >
-                          <div className="title">
-                            <Meta title={item.original_title} />
+                          <div  className="title">
+                            <Meta className="ant-card-meta-title" title={item.original_title} />
                             <p>
                               <BsFillStarFill style={{ color: "yellow" }} />{" "}
                               {item.vote_average} / 10

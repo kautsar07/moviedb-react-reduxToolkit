@@ -8,6 +8,8 @@ import Details from './component/Details/Details';
 import Search from './component/Navbar/Search';
 import Genres from './component/Genres/Genres';
 
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

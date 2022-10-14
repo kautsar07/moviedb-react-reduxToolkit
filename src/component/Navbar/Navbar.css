@@ -14,11 +14,13 @@ li {
 }
 
 nav {
-  background: transparent;
+  background: #6b6b6b46;
   top: 0;
   width: 100vw;
+  height: max-content;
   position: absolute;
   z-index: 11;
+  padding: 10px 0 10px 0;
 }
 
 .nav-main {
@@ -53,34 +55,22 @@ nav {
 .input-all:hover {
   border: 1px solid red;
 }
-.srch{
-  position: absolute;
-  right: 41%;
-  top: 18px;
-}
 .login-regis {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 10px;
-}
-.btn-log {
-  width: 90px;
-  background: transparent;
-  color: red;
-  font-size: small;
-  border: 1px solid red;
-  border-radius: 30px;
-  cursor: pointer;
+
 }
 
-.btn-log:hover {
+/* .btn-log:hover {
   background: transparent;
   color: rgb(255, 129, 129);
   border: 1px solid rgb(255, 129, 129);
 }
 .btn-reg {
   width: 90px;
+  height: 40px;
   background: red;
   font-size: small;
   color: white;
@@ -91,11 +81,32 @@ nav {
 .btn-reg:hover {
   background: rgb(255, 129, 129);
   border: 1px solid rgb(255, 129, 129);
-}
+} */
 .search {
   background: transparent;
   border-style: none;
   border: none;
   font-size: small;
   width: 100%;
+}
+/* .footer-modal{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top: 30px;
+} */
+.modal{
+  height: max-content;
+}
+.profile{
+  margin-left: 10px;
+}
+.profile img{
+  width: 50px;
+  border-radius: 30px;
+}
+.src{
+  position: absolute;
+  right: 41%;
+  top: 28px;
 }

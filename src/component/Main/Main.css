@@ -13,7 +13,7 @@ section{
 }
 .card img {
   width: 100%;
-  border-radius: 10px;
+  border-radius: 15px;
   border: none;
   height: 450px;
 }
@@ -21,9 +21,7 @@ section{
     border: none;
     text-decoration: none;
 }
-.card:hover{
-  cursor: pointer;
-}
+
 .btn-genre{
   width: 132px;
   background: transparent;
@@ -43,13 +41,13 @@ section{
 .title{
   width: 100%;
   height: 0px;
-  box-sizing: border-box;
-  position:absolute;
-  bottom: 0px;
-  border-radius: 0 0 10px 10px;
+  bottom: 50px;
+  /* box-sizing: border-box; */
+  position:absolute; 
+  border-radius: 0 0 15px 15px;
   padding: 10px;
   font-size: small;
-  background: rgb(27, 27, 27, .5);
+  background: transparent;
   visibility: hidden;
   opacity: 0;
 
@@ -57,20 +55,25 @@ section{
 
 .card:hover .title{
   height: 100px;
-  bottom: 0px;
+  left: 0px;
   color: white;
   background: rgb(27, 27, 27, .5);
   opacity: 1;
   visibility: visible;
   transition: ease-in-out 0.7s;
-  /* cursor: pointer; */
+  cursor: pointer;
 }
 
 .title p{
   font-size: 10px;
   margin: 5px 0 0 0;
+  color: white;
 }
 .loader{
 margin-bottom: 50px;
 opacity: 0.5;
+}
+.ant-card-meta-title{
+  color: white;
+  background: transparent;
 }

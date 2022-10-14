@@ -7,9 +7,6 @@ import Main from "../Main/Main";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import Footer from "../Footer/Footer";
 
-
-
-
 export default function Header() {
   const [trending, setTrending] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,7 +15,7 @@ export default function Header() {
       const res = await axios.get(
         "https://api.themoviedb.org/3/trending/all/day?api_key=6b4cec3e77943cdafbcaaaead5f55c14"
       );
-      console.log(res.data.results);
+
       setTrending(res.data.results.slice(0,3));
     } catch (error) {
       console.error(error);
@@ -37,7 +34,7 @@ export default function Header() {
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
   };
-  console.log(typeof trending.filter((item) => item.name === item[0]));
+ 
   return (
     <div>
       {/* ================= Navbar ============== */}
@@ -62,7 +59,7 @@ export default function Header() {
                   />
                   <div className="container">
                     <Carousel.Caption className="caption">
-                      <h1>{item.original_title || item.original_name}</h1>
+                      <h1 style={{color:"white"}}>{item.original_title || item.original_name}</h1>
                       <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Impedit autem ad at, aliquid id sequi expedita nemo

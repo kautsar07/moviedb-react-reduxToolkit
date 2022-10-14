@@ -17,9 +17,6 @@ header {
 }
 
 .caption {
-  /* display: flex;
-  justify-content: flex-start;
-  flex-direction: column; */
   position: absolute;
   top: 40%;
   right: 0;
@@ -28,7 +25,9 @@ header {
   text-align: left;
   color:#d3d3d3 ;
 }
-
+/* .caption h1{
+  color: #d3d3d3;
+} */
 .trailer {
   display: flex;
   justify-content: center;
