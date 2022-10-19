@@ -3,13 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Modal, Checkbox, Form, Input } from "antd";
 import { BsSearch } from "react-icons/bs";
 import axios from "axios";
-import {gapi} from "gapi-script"
+import { gapi } from "gapi-script";
 import "./Navbar.css";
 import "antd/dist/antd.css";
-
-import { GoogleLogin } from "react-google-login";
-
-
+import { GoogleLogin } from "@react-oauth/google";
 
 export default function Navbar() {
   const [search, setSearch] = useState([]);
@@ -22,23 +19,13 @@ export default function Navbar() {
   const [tokens, setTokens] = useState("");
   const [user, setUser] = useState([]);
 
-  const clientId="202764783206-qvsejn8n96u29dl97tjrkmaae33l4djd.apps.googleusercontent.com"
-  useEffect(()=>{
-    gapi.load("client:auth2", ()=>{
-    gapi.auth2.init({clientId:clientId})
-  })
-})
-  const responseGoogle = (response) => {
-    console.log(response);
-    localStorage.setItem("user", JSON.stringify(response.profileObj));
-    localStorage.setItem("token", JSON.stringify(response.accessToken));
+  const handleGoogleLogin = (credential) => {
+    localStorage.setItem("token", JSON.stringify(credential.credential));
+    localStorage.setItem("user", JSON.stringify({ first_name: "Google User" }));
     setTimeout(function () {
       window.location.reload(1);
     }, 1500);
-
-    setIsModalLoginOpen(false);
   };
-
   const submit = (e) => {
     navigate(`/Search/${search}`);
   };
@@ -164,10 +151,15 @@ export default function Navbar() {
                 </div>
               </div>
               <div className="login-regis">
-                <h5 style={{ color: "white" }}>{user.first_name || user.name}</h5>
+                <h5 style={{ color: "white" }}>
+                  {user.first_name || user.name}
+                </h5>
                 <div className="profile">
                   {user.image || user.imageUrl ? (
-                    <img onClick={showModalLogout} src={user.image || user.imageUrl}></img>
+                    <img
+                      onClick={showModalLogout}
+                      src={user.image || user.imageUrl}
+                    ></img>
                   ) : (
                     <img
                       onClick={showModalLogout}
@@ -175,6 +167,7 @@ export default function Navbar() {
                     ></img>
                   )}
                 </div>
+
                 <Modal
                   title="Logout to Your Account"
                   open={isModalLogoutOpen}
@@ -335,14 +328,15 @@ export default function Navbar() {
                         </Button>
                       </div>
                     </Form.Item>
-                    <GoogleLogin
-                      clientId="202764783206-qvsejn8n96u29dl97tjrkmaae33l4djd.apps.googleusercontent.com"
-                      buttonText="Login"
-                      onSuccess={responseGoogle}
-                      onFailure={responseGoogle}
-                      cookiePolicy={"single_host_origin"}
-                      scope="profile"
-                    />
+                    <div>
+                      <GoogleLogin
+                        style={{ borderRadius: "30px" }}
+                        onSuccess={handleGoogleLogin}
+                        onError={() => {
+                          console.log("Login Failed");
+                        }}
+                      />
+                    </div>
                   </Form>
                 </Modal>
                 <Modal
