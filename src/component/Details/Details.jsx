@@ -7,7 +7,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import { Autoplay, Pagination, Navigation } from "swiper";
+import { useDispatch, useSelector } from "react-redux";
 import Footer from "../Footer/Footer";
+import { loadDetails } from "../features/movies/getDetails";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -21,55 +23,55 @@ export default function Details() {
   const [detail, setDetail] = useState([]);
   const [genre, setGenre] = useState([]);
   const [cast, setCast] = useState([]);
-  const loadDetail = async () => {
-    try {
-      const res = await axios.get(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=6b4cec3e77943cdafbcaaaead5f55c14`
-      );
-      const item = await axios.get(
-        `https://api.themoviedb.org/3/movie/${id}/credits?api_key=6b4cec3e77943cdafbcaaaead5f55c14`
-      );
-      console.log(item.data);
-      console.log(res.data);
-      setDetail(res.data);
-      setCast(item.data.cast.slice(0, 7));
-      setGenre(res.data.genres);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const {popular, loadr } = useSelector((state) => state.details);
+  const dispatch = useDispatch()
+  // const loadDetail = async () => {
+  //   try {
+  //     const res = await axios.get(
+  //       `https://api.themoviedb.org/3/movie/${id}?api_key=6b4cec3e77943cdafbcaaaead5f55c14`
+  //     );
+  //     const item = await axios.get(
+  //       `https://api.themoviedb.org/3/movie/${id}/credits?api_key=6b4cec3e77943cdafbcaaaead5f55c14`
+  //     );
+  //     setDetail(res.data);
+  //     setCast(item.data.cast.slice(0, 7));
+  //     setGenre(res.data.genres);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
   useEffect(() => {
-    loadDetail();
+    dispatch(loadDetails(id))
   }, []);
 
   return (
     <div>
       <Navbar />
       <div className="deta">
-        <img
+      <img
           className="poster-detail"
           src={`https://image.tmdb.org/t/p/original/${
-            detail.backdrop_path || detail.poster_path
+            popular.backdrop_path || popular.poster_path
           }`}
         ></img>
       </div>
       <div className="container">
         <div className="detail">
-          <h1>{detail.original_title}</h1>
+          <h1 style={{color:"white"}}>{popular.original_title}</h1>
           <div className="genre">
-            {genre.map((item) => (
+            {/* {genre.map((item) => (
               <p>{item.name}</p>
-            ))}
+            ))} */}
           </div>
-          <p>{detail.overview}</p>
+          <p>{popular.overview}</p>
           <div>
             <p className="rating">
               <BsFillStarFill style={{ color: "yellow" }} />{" "}
-              {detail.vote_average} / 10
+              {popular.vote_average} / 10
             </p>
             <Button
               href={`https://www.youtube.com/results?search_query=${
-                detail.original_name || detail.original_title
+                popular.original_name || popular.original_title
               }`}
               className="trailer"
             >
@@ -96,7 +98,7 @@ export default function Details() {
             {cast.map((item) => (
               <SwiperSlide>
                 <Card
-                  className="card"
+                  className="ant-card-cover"
                   hoverable
                   cover={
                     <img
@@ -104,9 +106,12 @@ export default function Details() {
                     />
                   }
                 >
+                  <div className="ant-card-body">
+
                   <div className="title">
                     <Meta title={item.name} />
                     <p>Character: {item.character}</p>
+                  </div>
                   </div>
                 </Card>
               </SwiperSlide>

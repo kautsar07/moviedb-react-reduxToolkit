@@ -19,10 +19,9 @@ export default function Horor() {
   const loadCategory = async () => {
     try {
       const res = await axios.get(
-        `https://api.themoviedb.org/3/search/movie?api_key=6b4cec3e77943cdafbcaaaead5f55c14&query=${genre}`
+        `https://notflixtv.herokuapp.com/api/v1/movies?genre=${genre}&page=1`
       );
-      console.log(res.data);
-      setCategory(res.data.results);
+      setCategory(res.data.data.docs);
     } catch (error) {
       console.error(error);
     }
@@ -56,21 +55,21 @@ export default function Horor() {
           <div className="movie-popular">
             {category &&
               category.map((item) => (
-                <Link to={`/Details/${item.id}`}>
+                <Link to={`/Details/${item._id}`}>
                   <Card
                     className="card"
                     hoverable
                     cover={
                       <img
-                        src={`https://image.tmdb.org/t/p/original/${item.poster_path}`}
+                        src={`https://image.tmdb.org/t/p/original/${item.poster}`}
                       />
                     }
                   >
                     <div className="title">
-                      <Meta title={item.original_title} />
+                      <Meta title={item.title} />
                       <p>
                         <BsFillStarFill style={{ color: "yellow" }} />{" "}
-                        {item.vote_average} / 10
+                        {item.rating} / 10
                       </p>
                     </div>
                   </Card>

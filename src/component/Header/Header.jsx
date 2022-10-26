@@ -13,10 +13,10 @@ export default function Header() {
   const loadTrending = async () => {
     try {
       const res = await axios.get(
-        "https://api.themoviedb.org/3/trending/all/day?api_key=6b4cec3e77943cdafbcaaaead5f55c14"
+        "https://notflixtv.herokuapp.com/api/v1/movies?genre=Animation"
       );
 
-      setTrending(res.data.results.slice(0,3));
+      setTrending(res.data.data.docs.slice(1,4));
     } catch (error) {
       console.error(error);
     }
@@ -54,12 +54,12 @@ export default function Header() {
               trending.map((item) => (
                 <Carousel.Item className="mm">
                   <img
-                    className="d-block w-100"
-                    src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
+                    className="w-100 h-20"
+                    src={`https://image.tmdb.org/t/p/original/${item.poster}`}
                   />
                   <div className="container">
                     <Carousel.Caption className="caption">
-                      <h1 style={{color:"white"}}>{item.original_title || item.original_name}</h1>
+                      <h1 style={{color:"white"}}>{item.title}</h1>
                       <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Impedit autem ad at, aliquid id sequi expedita nemo
