@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,26 +10,19 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./Search.css";
+// import "../Main/Main.css";
+import { loadSearch } from "../features/movies/searchSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const { Meta } = Card;
 
 export default function Search() {
   const { name } = useParams();
-  const [search, setSearch] = useState([]);
-  const handleChange = async (e) => {
-    try {
-      const res = await axios.get(
-        `https://api.themoviedb.org/3/search/movie?api_key=6b4cec3e77943cdafbcaaaead5f55c14&query=${name}`
-      );
-      console.log(res.data.results);
-      setSearch(res.data.results);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const dispatch = useDispatch();
+  const { search } = useSelector((state) => state.searchs);
 
   useEffect(() => {
-    handleChange();
+    dispatch(loadSearch(name));
   }, []);
   return (
     <div>
@@ -38,7 +30,7 @@ export default function Search() {
       <div className="header">
         <div className="container">
           <div className="titles">
-            <h1>All Movie "{name}"</h1>
+            <h1 style={{ color: "white" }}>All Movie "{name}"</h1>
           </div>
         </div>
       </div>
@@ -62,7 +54,7 @@ export default function Search() {
                 <SwiperSlide>
                   <Link to={`/Details/${item.id}`}>
                     <Card
-                      className="card"
+                      className="ant-card-cover"
                       hoverable
                       cover={
                         <img
@@ -70,12 +62,14 @@ export default function Search() {
                         />
                       }
                     >
-                      <div className="title">
-                        <Meta title={item.original_title} />
-                        <p>
-                          <BsFillStarFill style={{ color: "yellow" }} />{" "}
-                          {item.vote_average} / 10
-                        </p>
+                      <div className="ant-card-body">
+                        <div className="title">
+                          <Meta title={item.original_title} />
+                          <p>
+                            <BsFillStarFill style={{ color: "yellow" }} />{" "}
+                            {item.vote_average} / 10
+                          </p>
+                        </div>
                       </div>
                     </Card>
                   </Link>

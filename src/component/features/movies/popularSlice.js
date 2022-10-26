@@ -6,7 +6,7 @@ const initialState = {
   loadr: false,
 };
 
-export const loadPopular = createAsyncThunk("movies/loadPopular", async (id = false) => {
+export const loadPopular = createAsyncThunk("movies/loadPopular", async () => {
   try {
     const gen = await axios.get(
       `https://api.themoviedb.org/3/movie/popular?api_key=6b4cec3e77943cdafbcaaaead5f55c14`

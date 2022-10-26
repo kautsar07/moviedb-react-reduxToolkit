@@ -13,11 +13,11 @@ export default function Navbar() {
   const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
   const [isModalRegisterOpen, setIsModalRegisterOpen] = useState(false);
   const [isModalLogoutOpen, setIsModalLogoutOpen] = useState(false);
-  const navigate = useNavigate();
   const [isHoverLogin, setIsHoverLogin] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [tokens, setTokens] = useState("");
   const [user, setUser] = useState([]);
+  const navigate = useNavigate();
 
   const handleGoogleLogin = (credential) => {
     localStorage.setItem("token", JSON.stringify(credential.credential));

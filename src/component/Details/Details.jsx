@@ -10,6 +10,7 @@ import { Autoplay, Pagination, Navigation } from "swiper";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../Footer/Footer";
 import { loadDetails } from "../features/movies/getDetails";
+import { loadCast } from "../features/movies/castSlice";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -20,28 +21,12 @@ const { Meta } = Card;
 
 export default function Details() {
   const { id } = useParams();
-  const [detail, setDetail] = useState([]);
-  const [genre, setGenre] = useState([]);
-  const [cast, setCast] = useState([]);
-  const {popular, loadr } = useSelector((state) => state.details);
+  const {popular } = useSelector((state) => state.details);
+  const {cast } = useSelector((state) => state.casts);
   const dispatch = useDispatch()
-  // const loadDetail = async () => {
-  //   try {
-  //     const res = await axios.get(
-  //       `https://api.themoviedb.org/3/movie/${id}?api_key=6b4cec3e77943cdafbcaaaead5f55c14`
-  //     );
-  //     const item = await axios.get(
-  //       `https://api.themoviedb.org/3/movie/${id}/credits?api_key=6b4cec3e77943cdafbcaaaead5f55c14`
-  //     );
-  //     setDetail(res.data);
-  //     setCast(item.data.cast.slice(0, 7));
-  //     setGenre(res.data.genres);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
   useEffect(() => {
     dispatch(loadDetails(id))
+    dispatch(loadCast(id))
   }, []);
 
   return (
@@ -59,9 +44,6 @@ export default function Details() {
         <div className="detail">
           <h1 style={{color:"white"}}>{popular.original_title}</h1>
           <div className="genre">
-            {/* {genre.map((item) => (
-              <p>{item.name}</p>
-            ))} */}
           </div>
           <p>{popular.overview}</p>
           <div>

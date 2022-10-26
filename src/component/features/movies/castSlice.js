@@ -2,40 +2,38 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  popular: [],
+  cast: [],
   loading: false,
 };
 
-export const loadDetails = createAsyncThunk(
-  "movies/loadDetails",
+export const loadCast = createAsyncThunk(
+  "movies/loadCast",
   async (id = false) => {
     try {
-      const gen = await axios.get(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=6b4cec3e77943cdafbcaaaead5f55c14`
+      const item = await axios.get(
+        `https://api.themoviedb.org/3/movie/${id}/credits?api_key=6b4cec3e77943cdafbcaaaead5f55c14`
       );
-      return gen.data;
+      return item.data.cast;
     } catch (error) {
       console.error(error);
     }
   }
 );
-
 export const postSlice = createSlice({
-  name: "details",
+  name: "casts",
   initialState,
   reducers: {},
   extraReducers: {
-    [loadDetails.pending]: (state) => {
+    [loadCast.pending]: (state) => {
       state.loading = true;
     },
-    [loadDetails.fulfilled]: (state, { payload }) => {
+    [loadCast.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.popular = payload;
+      state.cast = payload;
     },
-    [loadDetails.rejected]: (state) => {
+    [loadCast.rejected]: (state) => {
       state.loading = false;
     },
   },
 });
-
 export default postSlice.reducer;
