@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  popular: [],
+  detail: [],
   loading: false,
 };
 
@@ -30,7 +30,7 @@ export const postSlice = createSlice({
     },
     [loadDetails.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.popular = payload;
+      state.detail = payload;
     },
     [loadDetails.rejected]: (state) => {
       state.loading = false;

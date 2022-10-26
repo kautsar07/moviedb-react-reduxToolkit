@@ -22,7 +22,7 @@ const { Meta } = Card;
 
 export default function Details() {
   const { id } = useParams();
-  const {popular } = useSelector((state) => state.details);
+  const {detail } = useSelector((state) => state.details);
   const {cast } = useSelector((state) => state.casts);
   const dispatch = useDispatch()
   useEffect(() => {
@@ -37,24 +37,24 @@ export default function Details() {
       <img
           className="poster-detail"
           src={`https://image.tmdb.org/t/p/original/${
-            popular.backdrop_path || popular.poster_path
+            detail.backdrop_path || detail.poster_path
           }`}
         ></img>
       </div>
       <div className="container">
         <div className="detail">
-          <h1 style={{color:"white"}}>{popular.original_title}</h1>
+          <h1 style={{color:"white"}}>{detail.original_title}</h1>
           <div className="genre">
           </div>
-          <p>{popular.overview}</p>
+          <p>{detail.overview}</p>
           <div>
             <p className="rating">
               <BsFillStarFill style={{ color: "yellow" }} />{" "}
-              {popular.vote_average} / 10
+              {detail.vote_average} / 10
             </p>
             <Button
               href={`https://www.youtube.com/results?search_query=${
-                popular.original_name || popular.original_title
+                detail.original_name || detail.original_title
               }`}
               className="trailer"
             >
