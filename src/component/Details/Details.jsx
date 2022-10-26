@@ -16,6 +16,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./Details.css";
 import "../Main/Main.css";
+import Genre from "../Main/Genre";
 
 const { Meta } = Card;
 
@@ -66,6 +67,7 @@ export default function Details() {
         <div style={{ margin: "50px 0 50px 0" }}>
           <h1>Cast and Crew</h1>
         </div>
+        <Genre />
         <Swiper
           spaceBetween={30}
           slidesPerView={4}

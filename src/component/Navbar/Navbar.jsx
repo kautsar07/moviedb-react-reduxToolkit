@@ -7,6 +7,10 @@ import { gapi } from "gapi-script";
 import "./Navbar.css";
 import "antd/dist/antd.css";
 import { GoogleLogin } from "@react-oauth/google";
+import { useDispatch, useSelector } from "react-redux";
+import { loadLogin } from "../features/auth/loginSlice";
+import { loadLoginGoogle } from "../features/auth/loginGoogleSlice";
+import { loadRegister } from "../features/auth/registerSlice";
 
 export default function Navbar() {
   const [search, setSearch] = useState([]);
@@ -19,12 +23,11 @@ export default function Navbar() {
   const [user, setUser] = useState([]);
   const navigate = useNavigate();
 
+  const dispatch = useDispatch()
+  // const {login} = useSelector((state) => state.logins)
+
   const handleGoogleLogin = (credential) => {
-    localStorage.setItem("token", JSON.stringify(credential.credential));
-    localStorage.setItem("user", JSON.stringify({ first_name: "Google User" }));
-    setTimeout(function () {
-      window.location.reload(1);
-    }, 1500);
+    dispatch(loadLoginGoogle(credential))
   };
   const submit = (e) => {
     navigate(`/Search/${search}`);
@@ -55,25 +58,14 @@ export default function Navbar() {
     setIsModalRegisterOpen(true);
   };
   const onFinish = async (value) => {
-    console.log("Success: ", value);
-    try {
-      const res = await axios.post(
-        "https://notflixtv.herokuapp.com/api/v1/users/login",
-        value
-      );
-      localStorage.setItem("user", JSON.stringify(res.data.data));
-      localStorage.setItem("token", JSON.stringify(res.data.data.token));
-    } catch (error) {}
-    setTimeout(function () {
-      window.location.reload(1);
-    }, 1500);
+    dispatch(loadLogin(value))
     setIsModalLoginOpen(false);
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-  const onFinishLogout = async (value) => {
+  const onFinishLogout = async () => {
     setTimeout(function () {
       window.location.reload(1);
     }, 1500);
@@ -86,18 +78,7 @@ export default function Navbar() {
   };
 
   const onRegister = async (value) => {
-    console.log("Success: ", value);
-    try {
-      const res = await axios.post(
-        "https://notflixtv.herokuapp.com/api/v1/users",
-        value
-      );
-      localStorage.setItem("user", JSON.stringify(res.data.data));
-      localStorage.setItem("token", JSON.stringify(res.data.data.token));
-    } catch (error) {}
-    setTimeout(function () {
-      window.location.reload(1);
-    }, 1500);
+    dispatch(loadRegister(value))
     setIsModalLoginOpen(false);
   };
 

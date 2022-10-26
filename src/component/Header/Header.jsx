@@ -6,24 +6,31 @@ import Navbar from "../Navbar/Navbar";
 import Main from "../Main/Main";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import Footer from "../Footer/Footer";
+import { useDispatch, useSelector } from "react-redux";
+import { loadTren } from "../features/movies/trendingSlice";
+import { loadAll } from "../features/movies/allMovie";
 
 export default function Header() {
-  const [trending, setTrending] = useState([]);
+  // const [trending, setTrending] = useState([]);
   const [loading, setLoading] = useState(false);
-  const loadTrending = async () => {
-    try {
-      const res = await axios.get(
-        "https://notflixtv.herokuapp.com/api/v1/movies?genre=Animation"
-      );
+  const dispatch = useDispatch()
+  const {trending, loadr } = useSelector((state) => state.trendings)
+  // const { entities, load } = useSelector((state) => state.movies);
+  // const loadTrending = async () => {
+  //   try {
+  //     const res = await axios.get(
+  //       "https://notflixtv.herokuapp.com/api/v1/movies?genre=Animation"
+  //     );
 
-      setTrending(res.data.data.docs.slice(1,4));
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     setTrending(res.data.data.docs.slice(1,4));
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   useEffect(() => {
-    loadTrending();
+    // loadAll();
+    dispatch(loadTren())
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -50,16 +57,15 @@ export default function Header() {
         <header>
           {/* <div className="head"></div> */}
           <Carousel activeIndex={index} onSelect={handleSelect}>
-            {trending &&
-              trending.map((item) => (
+            {trending.map((item) => (
                 <Carousel.Item className="mm">
                   <img
                     className="w-100 h-20"
-                    src={`https://image.tmdb.org/t/p/original/${item.poster}`}
+                    src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
                   />
                   <div className="container">
                     <Carousel.Caption className="caption">
-                      <h1 style={{color:"white"}}>{item.title}</h1>
+                      <h1 style={{color:"white"}}>{item.original_title}</h1>
                       <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Impedit autem ad at, aliquid id sequi expedita nemo

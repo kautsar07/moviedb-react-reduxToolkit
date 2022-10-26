@@ -20,7 +20,6 @@ export default function AllMovie() {
   const dispatch = useDispatch();
 
   const { entities, load } = useSelector((state) => state.movies);
-  const {popular, loadr } = useSelector((state) => state.populars);
 
   useEffect(() => {
     dispatch(loadAll());
