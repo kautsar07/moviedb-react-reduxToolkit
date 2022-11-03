@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Modal, Checkbox, Form, Input } from "antd";
+import { Button, Modal, Form, Input } from "antd";
 import { BsSearch } from "react-icons/bs";
-import axios from "axios";
-import { gapi } from "gapi-script";
 import "./Navbar.css";
 import "antd/dist/antd.css";
-import { GoogleLogin } from "@react-oauth/google";
-import { useDispatch, useSelector } from "react-redux";
-import { loadLogin } from "../features/auth/loginSlice";
-import { loadLoginGoogle } from "../features/auth/loginGoogleSlice";
-import { loadRegister } from "../features/auth/registerSlice";
+import { useDispatch} from "react-redux";
+import {
+  registerWithEmailAndPassword,
+  auth,
+  logInWithEmailAndPassword,
+  signInWithGoogle,
+} from "../features/auth/authSlice";
+
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function Navbar() {
   const [search, setSearch] = useState([]);
@@ -21,13 +23,20 @@ export default function Navbar() {
   const [isHovering, setIsHovering] = useState(false);
   const [tokens, setTokens] = useState("");
   const [user, setUser] = useState([]);
+  const token = JSON.parse(localStorage.getItem("token"));
+  const users = JSON.parse(localStorage.getItem("user"));
+
+  const [userss,] = useAuthState(auth);
+  useEffect(() => {
+    setTokens(token);
+    setUser(users);
+  }, [userss, tokens]);
   const navigate = useNavigate();
 
-  const dispatch = useDispatch()
-  // const {login} = useSelector((state) => state.logins)
+  const dispatch = useDispatch();
 
-  const handleGoogleLogin = (credential) => {
-    dispatch(loadLoginGoogle(credential))
+  const googleLogin = () => {
+    dispatch(signInWithGoogle());
   };
   const submit = (e) => {
     navigate(`/Search/${search}`);
@@ -57,9 +66,9 @@ export default function Navbar() {
   const showModalRegister = () => {
     setIsModalRegisterOpen(true);
   };
+
   const onFinish = async (value) => {
-    dispatch(loadLogin(value))
-    setIsModalLoginOpen(false);
+    dispatch(logInWithEmailAndPassword(value));
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -77,17 +86,9 @@ export default function Navbar() {
     console.log("Failed:", errorInfo);
   };
 
-  const onRegister = async (value) => {
-    dispatch(loadRegister(value))
-    setIsModalLoginOpen(false);
+  const onRegister = async (values) => {
+    dispatch(registerWithEmailAndPassword(values));
   };
-
-  useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    const user = JSON.parse(localStorage.getItem("user"));
-    setTokens(token);
-    setUser(user);
-  }, [tokens]);
 
   const onRegisterFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -133,13 +134,13 @@ export default function Navbar() {
               </div>
               <div className="login-regis">
                 <h5 style={{ color: "white" }}>
-                  {user.first_name || user.name}
+                  {user.displayName || user.name}
                 </h5>
                 <div className="profile">
-                  {user.image || user.imageUrl ? (
+                  {user.photoURL || user.imageUrl ? (
                     <img
                       onClick={showModalLogout}
-                      src={user.image || user.imageUrl}
+                      src={user.photoURL || user.imageUrl}
                     ></img>
                   ) : (
                     <img
@@ -309,16 +310,64 @@ export default function Navbar() {
                         </Button>
                       </div>
                     </Form.Item>
-                    <div>
-                      <GoogleLogin
-                        style={{ borderRadius: "30px" }}
-                        onSuccess={handleGoogleLogin}
-                        onError={() => {
-                          console.log("Login Failed");
-                        }}
-                      />
-                    </div>
                   </Form>
+                  <Button
+                    type="submit"
+                    htmlType="submit"
+                    onClick={googleLogin}
+                    style={{
+                      borderRadius: "30px",
+                      background: isHovering ? "#fd8d8d" : "red",
+                      border: "1px solid red",
+                      color: "white",
+                      width: "fit-content",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Login with Google
+                  </Button>
+                  {/* <div>
+                    <div className="login">
+                      <div className="login__container">
+                        <input
+                          type="text"
+                          className="login__textBox"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="E-mail Address"
+                        />
+                        <input
+                          type="password"
+                          className="login__textBox"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          placeholder="Password"
+                        />
+                        <button
+                          className="login__btn"
+                          onClick={() =>
+                            logInWithEmailAndPassword(email, password)
+                          }
+                        >
+                          Login
+                        </button>
+                        <button
+                          type="submit"
+                          className="login__btn login__google"
+                          onClick={signInWithGoogle}
+                        >
+                          Login with Google
+                        </button>
+                        <div>
+                          <Link to="/reset">Forgot Password</Link>
+                        </div>
+                        <div>
+                          Don't have an account?{" "}
+                          <Link to="/register">Register</Link> now.
+                        </div>
+                      </div>
+                    </div>
+                  </div> */}
                 </Modal>
                 <Modal
                   title="Create Account"
@@ -335,7 +384,7 @@ export default function Navbar() {
                     autoComplete="off"
                   >
                     <Form.Item
-                      name="first_name"
+                      name="name"
                       rules={[
                         {
                           required: true,
@@ -349,23 +398,6 @@ export default function Navbar() {
                       <Input
                         style={{ borderRadius: "30px" }}
                         placeholder="First Name"
-                      />
-                    </Form.Item>
-                    <Form.Item
-                      name="last_name"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your Last Name!",
-                        },
-                        { whitespace: true },
-                        { min: 3 },
-                      ]}
-                      hasFeedback
-                    >
-                      <Input
-                        style={{ borderRadius: "30px" }}
-                        placeholder="Last Name"
                       />
                     </Form.Item>
                     <Form.Item
@@ -390,49 +422,24 @@ export default function Navbar() {
                           required: true,
                           // message: "Please input your password!",
                         },
-                        { min: 8 },
-                        {
-                          validator: (_, value) =>
-                            value &&
-                            value.match(
-                              /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
-                            )
-                              ? Promise.resolve()
-                              : Promise.reject(
-                                  "Password does not match criteria"
-                                ),
-                        },
+                        { min: 6 },
+                        // {
+                        //   validator: (_, value) =>
+                        //     value &&
+                        //     value.match(
+                        //       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
+                        //     )
+                        //       ? Promise.resolve()
+                        //       : Promise.reject(
+                        //           "Password does not match criteria"
+                        //         ),
+                        // },
                       ]}
                       hasFeedback
                     >
                       <Input.Password
                         style={{ borderRadius: "30px" }}
                         placeholder="Password"
-                      />
-                    </Form.Item>
-                    <Form.Item
-                      name="password_confirmation"
-                      dependencies={["password"]}
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter the same password!",
-                        },
-                        ({ getFieldValue }) => ({
-                          validator(_, value) {
-                            if (!value || getFieldValue("password") === value) {
-                              return Promise.resolve();
-                            }
-                            return Promise.reject(
-                              "The password you entered is not the same!"
-                            );
-                          },
-                        }),
-                      ]}
-                    >
-                      <Input.Password
-                        style={{ borderRadius: "30px" }}
-                        placeholder="Password Confirmation"
                       />
                     </Form.Item>
                     <Form.Item>
@@ -455,6 +462,43 @@ export default function Navbar() {
                       ,
                     </Form.Item>
                   </Form>
+                  {/* <div className="register">
+                    <div className="register__container">
+                      <input
+                        type="text"
+                        className="register__textBox"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Full Name"
+                      />
+                      <input
+                        type="text"
+                        className="register__textBox"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="E-mail Address"
+                      />
+                      <input
+                        type="password"
+                        className="register__textBox"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password"
+                      />
+                      <button className="register__btn" onClick={register}>
+                        Register
+                      </button>
+                      <button
+                        className="register__btn register__google"
+                        onClick={signInWithGoogle}
+                      >
+                        Register with Google
+                      </button>
+                      <div>
+                        Already have an account? <Link to="/">Login</Link> now.
+                      </div>
+                    </div>
+                  </div> */}
                 </Modal>
               </div>
             </div>
